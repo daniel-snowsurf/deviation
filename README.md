@@ -1,4 +1,4 @@
-Custom version for Fevo 7E
+Custom version for Devo 7E
 * Extended telemetry for AFHDS 2A
 * Layout editor
 * Permanent timer
