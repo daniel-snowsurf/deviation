@@ -182,13 +182,13 @@ static int afhds2a_init()
     A7105_WriteReg(0x25, 0x0A);
 
     A7105_SetTxRxMode(TX_EN);
-    
+
     A7105_SetPower(Model.tx_power);
     tx_power = Model.tx_power;
-    
+
     freq_offset = Model.proto_opts[PROTOOPTS_FREQTUNE];
     A7105_AdjustLOBaseFreq(freq_offset);
-    
+
     A7105_Strobe(A7105_STANDBY);
     A7105_SetTxRxMode(TX_EN);
     return 1;
@@ -299,13 +299,13 @@ static void update_telemetry()
 {
     // AA | TXID | RXID | sensor id | sensor # | value 16 bit big endian | sensor id ......
     // max 7 sensors per packet
-    
+
     u8 voltage_index = 0;
-#if HAS_EXTENDED_TELEMETRY
+//#if HAS_EXTENDED_TELEMETRY
     u8 cell_index = 0;
     u16 cell_total = 0;
     u8 temp_index;
-#endif
+//#endif
 
     for(u8 sensor=0; sensor<7; sensor++) {
         u8 index = 9+(4*sensor);
@@ -322,15 +322,15 @@ static void update_telemetry()
                     Telemetry.value[TELEM_FRSKY_VOLT2] = packet[index+3]<<8 | packet[index+2];
                     TELEMETRY_SetUpdated(TELEM_FRSKY_VOLT2);
                 }
-#if HAS_EXTENDED_TELEMETRY
+//#if HAS_EXTENDED_TELEMETRY
                 else if(voltage_index == 3) // external voltage sensor #2
                 {
                     Telemetry.value[TELEM_FRSKY_VOLT3] = packet[index+3]<<8 | packet[index+2];
                     TELEMETRY_SetUpdated(TELEM_FRSKY_VOLT3);
                 }
-#endif
+//#endif
                 break;
-#if HAS_EXTENDED_TELEMETRY
+//#if HAS_EXTENDED_TELEMETRY
             case SENSOR_TEMPERATURE:
                 temp_index = packet[index+1];
                 if(temp_index == 0) {
@@ -354,7 +354,7 @@ static void update_telemetry()
                 Telemetry.value[TELEM_FRSKY_RPM] = packet[index+3]<<8 | packet[index+2];
                 TELEMETRY_SetUpdated(TELEM_FRSKY_RPM);
                 break;
-#endif
+//#endif
             case SENSOR_RX_ERR_RATE:
                 Telemetry.value[TELEM_FRSKY_LQI] = 100 - packet[index+2];
                 TELEMETRY_SetUpdated(TELEM_FRSKY_LQI);
@@ -368,12 +368,12 @@ static void update_telemetry()
                 break;
             }
     }
-#if HAS_EXTENDED_TELEMETRY
+//#if HAS_EXTENDED_TELEMETRY
     if(cell_index > 0) {
         Telemetry.value[TELEM_FRSKY_ALL_CELL] = cell_total;
         TELEMETRY_SetUpdated(TELEM_FRSKY_ALL_CELL);
     }
-#endif 
+//#endif
 }
 
 static void build_bind_packet()
@@ -451,7 +451,7 @@ static void calc_fh_channels(uint32_t seed)
 static void initialize_tx_id()
 {
     u32 lfsr = 0x7649eca9ul;
-    
+
 #ifndef USE_FIXED_MFGID
     u8 var[12];
     MCU_SerialNumber(var, 12);
@@ -467,7 +467,7 @@ static void initialize_tx_id()
        for (u8 i = 0, j = 0; i < sizeof(Model.fixed_id); ++i, j += 8)
            rand32_r(&lfsr, (Model.fixed_id >> j) & 0xff);
     }
-    
+
     // Pump zero bytes for LFSR to diverge more
     for (int i = 0; i < TXID_SIZE; ++i) rand32_r(&lfsr, 0);
 
@@ -475,7 +475,7 @@ static void initialize_tx_id()
         txid[i] = lfsr & 0xff;
         rand32_r(&lfsr, i);
     }
-    
+
     // Use LFSR to seed frequency hopping sequence after another
     // divergence round
     for (u8 i = 0; i < sizeof(lfsr); ++i) rand32_r(&lfsr, 0);
@@ -494,7 +494,7 @@ static u16 afhds2a_cb()
     switch(state) {
         case BIND1:
         case BIND2:
-        case BIND3:    
+        case BIND3:
             A7105_Strobe(A7105_STANDBY);
             A7105_SetTxRxMode(TX_EN);
             build_bind_packet();
@@ -511,11 +511,11 @@ static u16 afhds2a_cb()
                     if(packet[9] == 0x01)
                         state = BIND4;
                 }
-            } 
+            }
             packet_count++;
             state |= WAIT_WRITE;
             return 1700;
-        
+
         case BIND1|WAIT_WRITE:
         case BIND2|WAIT_WRITE:
         case BIND3|WAIT_WRITE:
@@ -526,7 +526,7 @@ static u16 afhds2a_cb()
             if(state > BIND3)
                 state = BIND1;
             return 2150;
-        
+
         case BIND4:
             A7105_Strobe(A7105_STANDBY);
             A7105_SetTxRxMode(TX_EN);
@@ -534,22 +534,22 @@ static u16 afhds2a_cb()
             A7105_WriteData(packet, 38, packet_count%2 ? 0x0d : 0x8c);
             packet_count++;
             bind_reply++;
-            if(bind_reply>=4) { 
+            if(bind_reply>=4) {
                 packet_count=0;
                 channel=1;
                 state = DATA1;
                 PROTOCOL_SetBindState(0);
-            }                        
+            }
             state |= WAIT_WRITE;
             return 1700;
-            
+
         case BIND4|WAIT_WRITE:
             A7105_SetTxRxMode(RX_EN);
             A7105_Strobe(A7105_RX);
             state &= ~WAIT_WRITE;
             return 2150;
-        
-        case DATA1:    
+
+        case DATA1:
             A7105_Strobe(A7105_STANDBY);
             A7105_SetTxRxMode(TX_EN);
             build_packet(packet_type);
@@ -590,7 +590,7 @@ static u16 afhds2a_cb()
             packet_count++;
             state |= WAIT_WRITE;
             return 1700;
-            
+
         case DATA1|WAIT_WRITE:
             state &= ~WAIT_WRITE;
             A7105_SetTxRxMode(RX_EN);

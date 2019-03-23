@@ -204,24 +204,24 @@ const struct telem_layout frsky_layout_basic[] = {
     {TYPE_INDEX | 0, LBL1_X, LBL1_WIDTH,  1},
     {TYPE_VALUE | 0, FRSKY1_X, FRSKY1_WIDTH, TELEM_FRSKY_RSSI},
     {TYPE_VALUE | 0, FRSKY2_X, FRSKY1_WIDTH, TELEM_FRSKY_VOLT1},
-#if HAS_EXTENDED_TELEMETRY
+//#if HAS_EXTENDED_TELEMETRY
     {TYPE_VALUE | 0, FRSKY3_X, FRSKY1_WIDTH, TELEM_FRSKY_CELL1},
-#else
-    {TYPE_VALUE | 0, FRSKY3_X, FRSKY1_WIDTH, TELEM_FRSKY_LQI},
-#endif
+//#else
+//    {TYPE_VALUE | 0, FRSKY3_X, FRSKY1_WIDTH, TELEM_FRSKY_LQI},
+//#endif
 
     {TYPE_INDEX | 1, LBL1_X, LBL1_WIDTH,  2},
-#if HAS_EXTENDED_TELEMETRY
+//#if HAS_EXTENDED_TELEMETRY
     {TYPE_VALUE | 1, FRSKY1_X, FRSKY1_WIDTH, TELEM_FRSKY_TEMP1},
-#endif
+//#endif
     {TYPE_VALUE | 1, FRSKY2_X, FRSKY1_WIDTH, TELEM_FRSKY_VOLT2},
-#if HAS_EXTENDED_TELEMETRY
+//#if HAS_EXTENDED_TELEMETRY
     {TYPE_VALUE | 1, FRSKY3_X, FRSKY1_WIDTH, TELEM_FRSKY_CELL2},
-#else
-    {TYPE_VALUE | 1, FRSKY3_X, FRSKY1_WIDTH, TELEM_FRSKY_LRSSI},
-#endif
+//#else
+//    {TYPE_VALUE | 1, FRSKY3_X, FRSKY1_WIDTH, TELEM_FRSKY_LRSSI},
+//#endif
 
-#if HAS_EXTENDED_TELEMETRY
+//#if HAS_EXTENDED_TELEMETRY
     {TYPE_INDEX | 2, LBL1_X, LBL1_WIDTH,  3},
     {TYPE_VALUE | 2, FRSKY1_X, FRSKY1_WIDTH, TELEM_FRSKY_TEMP2},
     {TYPE_VALUE | 2, FRSKY2_X, FRSKY1_WIDTH, TELEM_FRSKY_VOLT3},
@@ -250,7 +250,7 @@ const struct telem_layout frsky_layout_basic[] = {
     {TYPE_INDEX | 7, LBL1_X, LBL1_WIDTH, 8},
     {TYPE_VALUE | 7, FRSKY1_X, FRSKY1_WIDTH, TELEM_FRSKY_LQI},
     {TYPE_VALUE | 7, FRSKY2_X, FRSKY1_WIDTH, TELEM_FRSKY_LRSSI},
-#endif
+//#endif
 
     {0, 0, 0, 0},
 };
@@ -264,11 +264,11 @@ const struct telem_layout2 dsm_page[] = {
     {devo_header_gps, devo_layout_gps, 3, 4},
 };
 const struct telem_layout2 frsky_page[] = {
-#if HAS_EXTENDED_TELEMETRY
+//#if HAS_EXTENDED_TELEMETRY
     {frsky_header_basic, frsky_layout_basic, 8, 1},
-#else
-    {frsky_header_basic, frsky_layout_basic, 2, 1},
-#endif
+//#else
+//    {frsky_header_basic, frsky_layout_basic, 2, 1},
+//#endif
     {devo_header_gps, devo_layout_gps, 3, 4},
 };
 static const char *header_cb(guiObject_t *obj, const void *data)
@@ -289,11 +289,11 @@ static const char *header_cb(guiObject_t *obj, const void *data)
         case RXV_LABEL: return "RxV";
         case BATT_LABEL: return "Bat";
         case DSM_LABEL: return "DSM";
-#if HAS_EXTENDED_TELEMETRY
+//#if HAS_EXTENDED_TELEMETRY
         case CELLS_LABEL:return "Cells";
-#else
-        case CELLS_LABEL:return "Signl";
-#endif
+//#else
+//        case CELLS_LABEL:return "Signl";
+//#endif
         case MISC_LABEL: return "Misc";
         case ARROW_LABEL: return current_page== telemetry_gps ? "<-" : "->";
     }

@@ -1,3 +1,10 @@
+Custom version for Fevo 7E
+* Extended telemetry for AFHDS 2A
+* Layout editor
+* Permanent timer
+* Datalog
+* No standard GUI
+
 The Deviation firmware project is hosted at http://www.deviationtx.com
 
 There you can find links to:

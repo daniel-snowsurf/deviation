@@ -107,12 +107,12 @@ typedef enum {
     TELEM_FRSKY_RSSI = 1,
     TELEM_FRSKY_VOLT1,  // VOLTx enums must be consecutive for
     TELEM_FRSKY_VOLT2,  // use in telemetry/telem_frsky.c
-#if HAS_EXTENDED_TELEMETRY
+//#if HAS_EXTENDED_TELEMETRY
     TELEM_FRSKY_VOLT3,
-#endif
+//#endif
     TELEM_FRSKY_LQI,
     TELEM_FRSKY_LRSSI,
-#if HAS_EXTENDED_TELEMETRY
+//#if HAS_EXTENDED_TELEMETRY
     TELEM_FRSKY_VOLTA,
     TELEM_FRSKY_TEMP1,  // TEMPx enums must be consecutive for
     TELEM_FRSKY_TEMP2,  // use in telemetry/telem_frsky.c
@@ -130,7 +130,7 @@ typedef enum {
     TELEM_FRSKY_ALTITUDE,
     TELEM_FRSKY_VARIO,
     TELEM_FRSKY_DISCHARGE,    // mAh
-#endif
+//#endif
     TELEM_FRSKY_LAST
 } frsky_telem_t;
 
@@ -291,7 +291,7 @@ enum {
 
 /************************************************************************/
 
-extern struct Telemetry Telemetry; 
+extern struct Telemetry Telemetry;
 s32 TELEMETRY_GetValue(int idx);
 s32 _TELEMETRY_GetValue(struct Telemetry *t, int idx);
 const char * TELEMETRY_GetValueStr(char *str, int idx);
