@@ -1,4 +1,14 @@
 # Deviation firmware for RC transmitters
+
+Custom version for Devo 7E
+   * Extended telemetry for AFHDS 2A
+   * Layout editor
+   * Permanent timer
+   * Datalog
+   * No standard GUI
+   * Fixed binding dialog
+   * Test Bayang protocol with 16CH
+
 The Deviation firmware project is hosted at http://www.deviationtx.com
 
 ## Current build status
