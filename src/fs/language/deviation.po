@@ -541,6 +541,7 @@ msgstr ""
 #: pages/common/standard/_curves_page.c:109
 #: pages/common/standard/_throhold_page.c:40 pages/common/_tx_configure.c:376
 #: protocol/bayang_nrf24l01.c:90 protocol/bayang_nrf24l01.c:92
+#: protocol/bayang16_nrf24l01.c:90 protocol/bayang16_nrf24l01.c:92
 #: protocol/cg023_nrf24l01.c:44 protocol/dsm2_cyrf6936.c:37
 #: protocol/dsm2_cyrf6936.c:40 protocol/dsm2_cyrf6936.c:41
 #: protocol/frsky2way_cc2500.c:25 protocol/fy326_nrf24l01.c:45
@@ -563,7 +564,9 @@ msgstr ""
 #: pages/common/_tx_configure.c:278 pages/common/_tx_configure.c:305
 #: pages/common/_tx_configure.c:374 pages/common/_tx_configure.c:390
 #: pages/common/_tx_configure.c:412 protocol/bayang_nrf24l01.c:90
+#: pages/common/_tx_configure.c:412 protocol/bayang16_nrf24l01.c:90
 #: protocol/bayang_nrf24l01.c:92 protocol/cflie_nrf24l01.c:185
+#: protocol/bayang16_nrf24l01.c:92
 #: protocol/cg023_nrf24l01.c:44 protocol/devo_cyrf6936.c:40
 #: protocol/dsm2_cyrf6936.c:37 protocol/dsm2_cyrf6936.c:40
 #: protocol/dsm2_cyrf6936.c:41 protocol/flysky_a7105.c:36
@@ -1798,6 +1801,7 @@ msgstr ""
 
 #: pages/common/_pages.c:110 pages/common/_pages.c:117
 #: protocol/bayang_nrf24l01.c:90 protocol/cflie_nrf24l01.c:185
+#: protocol/bayang16_nrf24l01.c:90
 #: protocol/devo_cyrf6936.c:40 protocol/dsm2_cyrf6936.c:37
 #: protocol/frsky2way_cc2500.c:25 protocol/hubsan_a7105.c:124
 #: protocol/inav_nrf24l01.c:180 protocol/yd717_nrf24l01.c:95
@@ -1963,6 +1967,7 @@ msgid "Deviation"
 msgstr ""
 
 #: protocol/bayang_nrf24l01.c:91 protocol/corona_cc2500.c:25
+#: protocol/bayang16_nrf24l01.c:91
 #: protocol/cx10_nrf24l01.c:53 protocol/fq777_nrf24l01.c:68
 #: protocol/frskyx_cc2500.c:29 protocol/fy326_nrf24l01.c:44
 #: protocol/h8_3d_nrf24l01.c:61 protocol/hisky_nrf24l01.c:71
@@ -1975,10 +1980,12 @@ msgid "Format"
 msgstr ""
 
 #: protocol/bayang_nrf24l01.c:91
+#: protocol/bayang16_nrf24l01.c:91
 msgid "regular"
 msgstr ""
 
 #: protocol/bayang_nrf24l01.c:92
+#: protocol/bayang16_nrf24l01.c:92
 msgid "Analog Aux"
 msgstr ""
 
@@ -2435,4 +2442,3 @@ msgstr ""
 #: Model template
 msgid "Heli/Standard GUI"
 msgstr ""
-

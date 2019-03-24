@@ -111,8 +111,10 @@ void PAGE_ShowBindingDialog(u8 update)
     if (dialog && crc != dialogcrc) {
         GUI_Redraw(dialog);
     } else if(! dialog) {
+//        dialog = GUI_CreateDialog(&gui->dialog, DIALOG2_X, DIALOG2_Y,
+//                     DIALOG2_WIDTH, DIALOG2_HEIGHT, NULL, NULL, binding_ok_cb, dtOk, tempstring);
         dialog = GUI_CreateDialog(&gui->dialog, DIALOG2_X, DIALOG2_Y,
-                     DIALOG2_WIDTH, DIALOG2_HEIGHT, NULL, NULL, binding_ok_cb, dtOk, tempstring);
+                                  DIALOG2_WIDTH, DIALOG2_HEIGHT, NULL, binding_string_cb, binding_ok_cb, dtOk, NULL);
     }
     dialogcrc = crc;
 }
@@ -190,6 +192,6 @@ void PAGE_ShowModuleDialog(const char **missing)
                count++;
            }
         }
-    } 
+    }
     PAGE_ShowWarning(NULL, tempstring);
 }

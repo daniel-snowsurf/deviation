@@ -447,7 +447,6 @@ void TELEMETRY_Alarm()
 
         if (TELEMETRY_Type() == TELEM_FRSKY) {
             switch (alarm->src) {
-#if HAS_EXTENDED_TELEMETRY
                 case TELEM_FRSKY_VOLT3:
                 case TELEM_FRSKY_VOLTA:
                 case TELEM_FRSKY_MIN_CELL:
@@ -458,16 +457,13 @@ void TELEMETRY_Alarm()
                 case TELEM_FRSKY_CELL4:
                 case TELEM_FRSKY_CELL5:
                 case TELEM_FRSKY_CELL6:
-#endif
                 case TELEM_FRSKY_VOLT1:
                 case TELEM_FRSKY_VOLT2: MUSIC_PlayValue(telem_music, telem_value,VOICE_UNIT_VOLT,2); break;
-#if HAS_EXTENDED_TELEMETRY
                 case TELEM_FRSKY_TEMP1:
                 case TELEM_FRSKY_TEMP2: MUSIC_PlayValue(telem_music, telem_value-20,VOICE_UNIT_TEMP,0); break;
                 case TELEM_FRSKY_RPM: MUSIC_PlayValue(telem_music, telem_value,VOICE_UNIT_RPM,0); break;
                 case TELEM_FRSKY_CURRENT: MUSIC_PlayValue(telem_music, telem_value,VOICE_UNIT_AMPS,2); break;
                 case TELEM_FRSKY_ALTITUDE: MUSIC_PlayValue(telem_music, telem_value,VOICE_UNIT_ALTITUDE,2); break;
-#endif
                 case TELEM_FRSKY_LRSSI:
                 case TELEM_FRSKY_RSSI: MUSIC_PlayValue(telem_music, telem_value,VOICE_UNIT_DB,0); break;
                 default: MUSIC_PlayValue(telem_music, telem_value,VOICE_UNIT_NONE,0);

@@ -97,7 +97,7 @@ void PAGE_ShowBindingDialog(u8 update)
 }
 
 void PAGE_ShowWarning(const char *title, const char *str)
-{   
+{
     if (dialog)
         return;
     snprintf(dlg_string, sizeof(dlg_string), "%s", str);
@@ -153,7 +153,6 @@ void PAGE_ShowModuleDialog(const char **missing)
        if(missing[i]) {
            sprintf(tempstring+strlen(tempstring), "%s\n", missing[i]);
        }
-    } 
+    }
     PAGE_ShowWarning(_tr("Module Error"), tempstring);
 }
-

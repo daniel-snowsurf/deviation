@@ -33,6 +33,7 @@ PROTO_MODULES += $(ODIR)/protocol/cg023.mod
 PROTO_MODULES += $(ODIR)/protocol/hontai.mod
 PROTO_MODULES += $(ODIR)/protocol/fy326.mod
 PROTO_MODULES += $(ODIR)/protocol/bayang.mod
+PROTO_MODULES += $(ODIR)/protocol/bayang16.mod
 PROTO_MODULES += $(ODIR)/protocol/h8-3d.mod
 PROTO_MODULES += $(ODIR)/protocol/mjxq.mod
 PROTO_MODULES += $(ODIR)/protocol/mt99xx.mod
@@ -77,7 +78,7 @@ $(ODIR)/protocol/dsmx.mod : $(ODIR)/dsm2_cyrf6936.bin
 $(ODIR)/protocol/flysky.mod : $(ODIR)/flysky_a7105.bin
 	@echo Building 'flysky' module
 	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
-    
+
 $(ODIR)/protocol/afhds-2a.mod : $(ODIR)/flysky_afhds2a_a7105.bin
 	@echo Building 'afhds-2a' module
 	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
@@ -180,40 +181,44 @@ $(ODIR)/protocol/cx10.mod : $(ODIR)/cx10_nrf24l01.bin
 
 $(ODIR)/protocol/cg023.mod : $(ODIR)/cg023_nrf24l01.bin
 	@echo Building 'cg023' module
-	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@    
-    
+	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
+
 $(ODIR)/protocol/hontai.mod : $(ODIR)/hontai_nrf24l01.bin
 	@echo Building 'hontai' module
-	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@    
+	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
 
 $(ODIR)/protocol/fy326.mod : $(ODIR)/fy326_nrf24l01.bin
 	@echo Building 'fy326' module
-	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@    
+	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
 
 $(ODIR)/protocol/bayang.mod : $(ODIR)/bayang_nrf24l01.bin
 	@echo Building 'bayang' module
-	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@    
+	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
+
+$(ODIR)/protocol/bayang16.mod : $(ODIR)/bayang16_nrf24l01.bin
+		@echo Building 'bayang16' module
+		/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@    
 
 $(ODIR)/protocol/h8-3d.mod : $(ODIR)/h8_3d_nrf24l01.bin
 	@echo Building 'h8-3d' module
-	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@    
+	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
 
 $(ODIR)/protocol/mjxq.mod : $(ODIR)/mjxq_nrf24l01.bin
 	@echo Building 'mjxq' module
-	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@    
+	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
 
 $(ODIR)/protocol/mt99xx.mod : $(ODIR)/mt99xx_nrf24l01.bin
 	@echo Building 'mt99xx' module
-	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@    
+	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
 
 $(ODIR)/protocol/s-fhss.mod : $(ODIR)/sfhss_cc2500.bin
 	@echo Building 'sfhss' module
-	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@    
+	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
 
 $(ODIR)/protocol/frskyx.mod : $(ODIR)/frskyx_cc2500.bin
 	@echo Building 'frskyx' module
 	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
-    
+
 $(ODIR)/protocol/assan.mod : $(ODIR)/assan_nrf24l01.bin
 	@echo Building 'assan' module
 	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
@@ -237,7 +242,7 @@ $(ODIR)/protocol/gw008.mod : $(ODIR)/gw008_nrf24l01.bin
 $(ODIR)/protocol/dm002.mod : $(ODIR)/dm002_nrf24l01.bin
 	@echo Building 'dm002' module
 	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
-    
+
 $(ODIR)/protocol/corona.mod : $(ODIR)/corona_cc2500.bin
 	@echo Building 'corona' module
 	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
@@ -245,11 +250,11 @@ $(ODIR)/protocol/corona.mod : $(ODIR)/corona_cc2500.bin
 $(ODIR)/protocol/bugs3.mod : $(ODIR)/bugs3_a7105.bin
 	@echo Building 'bugs3' module
 	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
-    
+
 $(ODIR)/protocol/crsf.mod : $(ODIR)/crsf_uart.bin
 	@echo Building 'crsf' module
 	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
-    
+
 $(ODIR)/protocol/hitec.mod : $(ODIR)/hitec_cc2500.bin
 	@echo Building 'hitec' module
 	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
@@ -257,31 +262,31 @@ $(ODIR)/protocol/hitec.mod : $(ODIR)/hitec_cc2500.bin
 $(ODIR)/protocol/wfly.mod : $(ODIR)/wfly_cyrf6936.bin
 	@echo Building 'wfly' module
 	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
-    
+
 $(ODIR)/protocol/bugs3min.mod : $(ODIR)/bugs3mini_nrf24l01.bin
 	@echo Building 'bug3mini' module
 	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
-    
+
 $(ODIR)/protocol/e012.mod : $(ODIR)/e012_nrf24l01.bin
 	@echo Building 'e012' module
 	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
-    
+
 $(ODIR)/protocol/e015.mod : $(ODIR)/e015_nrf24l01.bin
 	@echo Building 'e015' module
 	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
-    
+
 $(ODIR)/protocol/ncc1701.mod : $(ODIR)/ncc1701_nrf24l01.bin
 	@echo Building 'ncc1701' module
 	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
-    
+
 $(ODIR)/protocol/v911s.mod : $(ODIR)/v911s_nrf24l01.bin
 	@echo Building 'v911s' module
 	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
-    
+
 $(ODIR)/protocol/gd00x.mod : $(ODIR)/gd00x_nrf24l01.bin
 	@echo Building 'gd00x' module
 	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@
-    
+
 $(ODIR)/protocol/sbus.mod : $(ODIR)/sbus_uart.bin
 	@echo Building 'sbus' module
 	/bin/mkdir -p $(ODIR)/protocol/ 2>/dev/null; /bin/cp $< $@

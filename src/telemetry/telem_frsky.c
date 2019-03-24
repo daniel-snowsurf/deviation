@@ -26,7 +26,6 @@ const char * _frsky_str_by_value(char *str, u8 telem, s32 value)
         case TELEM_FRSKY_RSSI:  _get_value_str(str, value, 0, 'd'); break;
         case TELEM_FRSKY_LRSSI: _get_value_str(str, value, 0, 'd'); break;
         case TELEM_FRSKY_LQI: _get_value_str(str, value, 0, 0); break;
-#if HAS_EXTENDED_TELEMETRY
         case TELEM_FRSKY_VOLT3:
         case TELEM_FRSKY_CELL1:
         case TELEM_FRSKY_CELL2:
@@ -45,7 +44,6 @@ const char * _frsky_str_by_value(char *str, u8 telem, s32 value)
         case TELEM_FRSKY_ALTITUDE:
         case TELEM_FRSKY_VARIO: _get_altitude_str(str, value, 2, 'm'); break;
         case TELEM_FRSKY_DISCHARGE: _get_value_str(str, value, 0, 'D'); break;
-#endif
         default:
             return "";
     }
@@ -58,15 +56,12 @@ const char * _frsky_short_name(char *str, u8 telem)
         case 0: strcpy(str, _tr("None")); break;
         case TELEM_FRSKY_VOLT1:
         case TELEM_FRSKY_VOLT2:
-#if HAS_EXTENDED_TELEMETRY
         case TELEM_FRSKY_VOLT3:
-#endif
             sprintf(str, "%s%d", _tr("Volt"), telem - TELEM_FRSKY_VOLT1 + 1);
             break;
         case TELEM_FRSKY_RSSI:  strcpy(str, _tr("RSSI")); break;
         case TELEM_FRSKY_LRSSI: strcpy(str, _tr("LRSSI")); break;
         case TELEM_FRSKY_LQI: strcpy(str, _tr("LQI")); break;
-#if HAS_EXTENDED_TELEMETRY
         case TELEM_FRSKY_VOLTA: sprintf(str, "%s%c", _tr("Volt"), (_tr("Amps"))[0]); break;
         case TELEM_FRSKY_MIN_CELL: strcpy(str, _tr("MinCell")); break;
         case TELEM_FRSKY_ALL_CELL: strcpy(str, _tr("AllCell")); break;
@@ -84,7 +79,6 @@ const char * _frsky_short_name(char *str, u8 telem)
         case TELEM_FRSKY_ALTITUDE: strcpy(str, _tr("Alt")); break;
         case TELEM_FRSKY_VARIO: strcpy(str, _tr("VSI")); break;
         case TELEM_FRSKY_DISCHARGE: strcpy(str, _tr("DIS")); break;
-#endif
         default: sprintf(str, "FrST%d", telem); break;
     }
     return str;
@@ -95,15 +89,12 @@ const char * _frsky_name(char *str, u8 telem)
     switch (telem) {
         case TELEM_FRSKY_VOLT1:
         case TELEM_FRSKY_VOLT2:
-#if HAS_EXTENDED_TELEMETRY
         case TELEM_FRSKY_VOLT3:
-#endif
             sprintf(str, "%s%d", _tr("TelemV"), telem - TELEM_FRSKY_VOLT1 + 1);
             break;
         case TELEM_FRSKY_RSSI:
             strcpy(str, _tr("TelemRSSI"));
             break;
-#if HAS_EXTENDED_TELEMETRY
         case TELEM_FRSKY_VOLTA:
             sprintf(str, "%s%s", _tr("TelemV"), _tr("Amp"));
             break;
@@ -114,7 +105,6 @@ const char * _frsky_name(char *str, u8 telem)
         case TELEM_FRSKY_RPM:
             strcpy(str, _tr("TelemRPM"));
             break;
-#endif
         default:
             _frsky_short_name(str, telem);
             break;
@@ -130,7 +120,6 @@ s32 _frsky_get_max_value(u8 telem)
         case TELEM_FRSKY_RSSI:      return 60000;
         case TELEM_FRSKY_LQI:       return 127;
         case TELEM_FRSKY_LRSSI:     return -10;
-#if HAS_EXTENDED_TELEMETRY
         case TELEM_FRSKY_RPM:       return 60000;
         case TELEM_FRSKY_VOLT3:
         case TELEM_FRSKY_ALL_CELL:  return 500 * 6;   // in 100ths of volts
@@ -149,7 +138,6 @@ s32 _frsky_get_max_value(u8 telem)
         case TELEM_FRSKY_ALTITUDE:  return 900000; // cm
         case TELEM_FRSKY_VARIO:     return 500000; // cm
         case TELEM_FRSKY_DISCHARGE: return 500000;
-#endif
         default:
             return 0;
     }
@@ -159,13 +147,11 @@ s32 _frsky_get_min_value(u8 telem)
 {
     switch(telem) {
         case TELEM_FRSKY_LRSSI:     return -200;
-#if HAS_EXTENDED_TELEMETRY
         case TELEM_FRSKY_TEMP1:
         case TELEM_FRSKY_TEMP2:     return -30;
         case TELEM_FRSKY_RPM:       return 60;
         case TELEM_FRSKY_ALTITUDE:  return -50000; // cm
         case TELEM_FRSKY_VARIO:     return -500000; // cm
-#endif
         default:
             return 0;
     }
