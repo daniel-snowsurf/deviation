@@ -31,10 +31,11 @@ enum {
     LBL1_X       = 0,
     LBL1_WIDTH   = 7,
     LBL2_X       = 43,
+    LBL2_WIDTH   = 20,          // Ancho etiqueta para 3 valores por fila
     LBL3_X       = 86,
-    LBL4_X       = 0,
-    LBL4_WIDTH   = 25,
-    LBL5_X       = 61,
+    LBL4_X       = 0,           // Posición etiqueta 1 para 2 valores por fila
+    LBL4_WIDTH   = 25,          // Ancho etiqueta para 2 valores por fila
+    LBL5_X       = 61,          // Posición etiqueta 2 para 2 valores por fila
     //
     HEADER_X     = 90,
     HEADER_WIDTH = 35,
@@ -42,12 +43,13 @@ enum {
     GPS_X        = 0,
     GPS_WIDTH    = LCD_WIDTH - ARROW_WIDTH - 3,
     //
-    DSM1_X       = 7,
-    DSM1_WIDTH   = 35,
-    DSM2_X       = 50,
-    DSM3_X       = 93,
-    DSM4_X       = 25,
-    DSM5_X       = 86,
+    DSM1_X       = 21,          // Posición telem 1 para 3 valores por fila
+    DSM1_WIDTH   = 35,          // Ancho telem para 2 valores por fila
+    DSM2_X       = 57,          // Posición telem 2 para 3 valores por fila
+    DSM2_WIDTH   = 30,          // Ancho telem para 3 valores por fila
+    DSM3_X       = 93,          // Posición telem 3 para 3 valores por fila
+    DSM4_X       = 25,          // Posición telem 1 para 2 valores por fila
+    DSM5_X       = 86,          // Posición telem 2 para 2 valores por fila
     //
     FRSKY1_X     = 8,
     FRSKY1_WIDTH = 35,
@@ -91,15 +93,19 @@ enum {
     VOLT_LABEL,
     RPM_LABEL,
     GPS_LABEL,
-    A_LABEL,
-    B_LABEL,
-    L_LABEL,
-    R_LABEL,
-    F_LABEL,
-    H_LABEL,
+    PID_LABEL,
+    LVC_LABEL,
+    TXFRAMES_LABEL,
+    RXFRAMES_LABEL,
     RXV_LABEL,
     BATT_LABEL,
+    RAW_LABEL,
     DSM_LABEL,
+    LQI_LABEL,
+    RSSI_LABEL,
+    CELL_LABEL,
+    S_LABEL,
+    FRSKY_LABEL,
     CELLS_LABEL,
     MISC_LABEL,
     RX_LABEL,
@@ -162,76 +168,58 @@ const struct telem_layout devo_layout_gps[] = {
 
 const struct telem_layout dsm_header_basic[] = {
         {TYPE_HEADER, HEADER_X, HEADER_WIDTH, DSM_LABEL},
-        {TYPE_HEADER, ARROW_X, ARROW_W,     ARROW_LABEL},
+        {TYPE_HEADER, ARROW_X,  ARROW_W,      ARROW_LABEL},
         {0, 0, 0, 0},
 };
 
 const struct telem_layout dsm_layout_basic[] = {
-    {TYPE_HEADER | 0, LBL1_X, LBL1_WIDTH,  A_LABEL},
-    {TYPE_VALUE  | 0, DSM1_X, DSM1_WIDTH, TELEM_DSM_FLOG_FADESA},
-    {TYPE_HEADER | 0, LBL2_X, LBL1_WIDTH,  B_LABEL},
-    {TYPE_VALUE  | 0, DSM2_X, DSM1_WIDTH, TELEM_DSM_FLOG_FADESB},
-    {TYPE_HEADER | 0, LBL3_X, LBL1_WIDTH,  F_LABEL},
-    {TYPE_VALUE  | 0, DSM3_X, DSM1_WIDTH, TELEM_DSM_FLOG_FRAMELOSS},
+    {TYPE_HEADER | 0, LBL4_X, LBL4_WIDTH, RXFRAMES_LABEL},
+    {TYPE_VALUE  | 0, DSM4_X, DSM1_WIDTH, TELEM_DSM_FLOG_HOLDS},
+    {TYPE_HEADER | 0, LBL5_X, LBL4_WIDTH, TXFRAMES_LABEL},
+    {TYPE_VALUE  | 0, DSM5_X, DSM1_WIDTH, TELEM_DSM_FLOG_FRAMELOSS},
 
-    {TYPE_HEADER | 1, LBL1_X, LBL1_WIDTH,  L_LABEL},
-    {TYPE_VALUE  | 1, DSM1_X, DSM1_WIDTH, TELEM_DSM_FLOG_FADESL},
-    {TYPE_HEADER | 1, LBL2_X, LBL1_WIDTH,  R_LABEL},
-    {TYPE_VALUE  | 1, DSM2_X, DSM1_WIDTH, TELEM_DSM_FLOG_FADESR},
-    {TYPE_HEADER | 1, LBL3_X, LBL1_WIDTH,  H_LABEL},
-    {TYPE_VALUE  | 1, DSM3_X, DSM1_WIDTH, TELEM_DSM_FLOG_HOLDS},
+    {TYPE_HEADER | 1, LBL4_X, LBL4_WIDTH, BATT_LABEL},
+    {TYPE_VALUE  | 1, DSM4_X, DSM1_WIDTH, TELEM_DSM_FLOG_VOLT2},
+    {TYPE_HEADER | 1, LBL5_X, LBL4_WIDTH, RAW_LABEL},
+    {TYPE_VALUE  | 1, DSM5_X, DSM1_WIDTH, TELEM_DSM_FLOG_VOLT1},
 
-    /*  #if HAS_EXTENDED_TELEMETRY  // it doesn't nicely fit to page
-    {TYPE_HEADER | 2, LBL1_X, LBL1_WIDTH, TEMP_LABEL},
-    {TYPE_VALUE  | 2, DSM1_X, DSM1_WIDTH, TELEM_DSM_FLOG_TEMP1},
-    {TYPE_HEADER | 2, LBL2_X, LBL1_WIDTH, RXV_LABEL},
-    {TYPE_VALUE  | 2, DSM2_X, DSM1_WIDTH, TELEM_DSM_FLOG_VOLT1},
-    {TYPE_HEADER | 2, LBL3_X, LBL1_WIDTH, MISC_LABEL},
-    {TYPE_VALUE  | 2, DSM3_X, DSM1_WIDTH, TELEM_DSM_FLOG_RSSI_DBM},
-    #else  */
-    {TYPE_HEADER | 2, LBL4_X, LBL4_WIDTH, TEMP_LABEL},
-    {TYPE_VALUE  | 2, DSM4_X, DSM1_WIDTH, TELEM_DSM_FLOG_TEMP1},
-    {TYPE_HEADER | 2, LBL5_X, LBL4_WIDTH, RXV_LABEL},
-    {TYPE_VALUE  | 2, DSM5_X, DSM1_WIDTH, TELEM_DSM_FLOG_VOLT1},
-    //  #endif
+    {TYPE_HEADER | 2, LBL4_X, LBL4_WIDTH, LVC_LABEL},
+    {TYPE_VALUE  | 2, DSM4_X, DSM1_WIDTH, TELEM_DSM_FLOG_FADESL},
 
-    {TYPE_HEADER | 3, LBL4_X, LBL4_WIDTH, BATT_LABEL},
-    {TYPE_VALUE  | 3, DSM4_X, DSM1_WIDTH, TELEM_DSM_FLOG_VOLT2},
-    {TYPE_HEADER | 3, LBL5_X, LBL4_WIDTH, RPM_LABEL},
-    {TYPE_VALUE  | 3, DSM5_X, DSM1_WIDTH, TELEM_DSM_FLOG_RPM1},
+    {TYPE_HEADER | 3, LBL1_X, LBL2_WIDTH, PID_LABEL},
+    {TYPE_VALUE  | 3, DSM1_X, DSM2_WIDTH, TELEM_DSM_FLOG_FADESA},
+    {TYPE_VALUE  | 3, DSM2_X, DSM2_WIDTH, TELEM_DSM_FLOG_FADESB},
+    {TYPE_VALUE  | 3, DSM3_X, DSM2_WIDTH, TELEM_DSM_FLOG_FADESR},
     {0, 0, 0, 0},
 };
 
 const struct telem_layout frsky_header_basic[] = {
+#if HAS_EXTENDED_TELEMETRY
         {TYPE_HEADER, ITEM1_X, ITEM1_WIDTH, MISC_LABEL},
         {TYPE_HEADER, ITEM2_X, ITEM1_WIDTH, BATT_LABEL},
         {TYPE_HEADER, ITEM3_X, ITEM1_WIDTH, CELLS_LABEL},
         {TYPE_HEADER, ARROW_X, ARROW_W,     ARROW_LABEL},
+#else
+        {TYPE_HEADER, HEADER_X, HEADER_WIDTH, FRSKY_LABEL},
+        {TYPE_HEADER, ARROW_X,  ARROW_W,      ARROW_LABEL},
+#endif
         {0, 0, 0, 0},
 };
 
 const struct telem_layout frsky_layout_basic[] = {
+#if HAS_EXTENDED_TELEMETRY
     {TYPE_INDEX | 0, LBL1_X, LBL1_WIDTH,  1},
     {TYPE_VALUE | 0, FRSKY1_X, FRSKY1_WIDTH, TELEM_FRSKY_RSSI},
     {TYPE_VALUE | 0, FRSKY2_X, FRSKY1_WIDTH, TELEM_FRSKY_VOLT1},
-#if HAS_EXTENDED_TELEMETRY
     {TYPE_VALUE | 0, FRSKY3_X, FRSKY1_WIDTH, TELEM_FRSKY_CELL1},
-#else
     {TYPE_VALUE | 0, FRSKY3_X, FRSKY1_WIDTH, TELEM_FRSKY_LQI},
-#endif
 
     {TYPE_INDEX | 1, LBL1_X, LBL1_WIDTH,  2},
-#if HAS_EXTENDED_TELEMETRY
     {TYPE_VALUE | 1, FRSKY1_X, FRSKY1_WIDTH, TELEM_FRSKY_TEMP1},
-#endif
     {TYPE_VALUE | 1, FRSKY2_X, FRSKY1_WIDTH, TELEM_FRSKY_VOLT2},
-#if HAS_EXTENDED_TELEMETRY
     {TYPE_VALUE | 1, FRSKY3_X, FRSKY1_WIDTH, TELEM_FRSKY_CELL2},
-#else
     {TYPE_VALUE | 1, FRSKY3_X, FRSKY1_WIDTH, TELEM_FRSKY_LRSSI},
-#endif
 
-#if HAS_EXTENDED_TELEMETRY
     {TYPE_INDEX | 2, LBL1_X, LBL1_WIDTH,  3},
     {TYPE_VALUE | 2, FRSKY1_X, FRSKY1_WIDTH, TELEM_FRSKY_TEMP2},
     {TYPE_VALUE | 2, FRSKY2_X, FRSKY1_WIDTH, TELEM_FRSKY_VOLT3},
@@ -266,8 +254,22 @@ const struct telem_layout frsky_layout_basic[] = {
     {TYPE_VALUE | 8, FRSKY1_X, FRSKY1_WIDTH, TELEM_FRSKY_ACCX},
     {TYPE_VALUE | 8, FRSKY2_X, FRSKY1_WIDTH, TELEM_FRSKY_ACCY},
     {TYPE_VALUE | 8, FRSKY3_X, FRSKY1_WIDTH, TELEM_FRSKY_ACCZ},
-#endif
+#else
+    {TYPE_HEADER | 0, LBL4_X, LBL4_WIDTH, LQI_LABEL},
+    {TYPE_VALUE  | 0, DSM4_X, DSM1_WIDTH, TELEM_FRSKY_LQI},
+    {TYPE_HEADER | 0, LBL5_X, LBL4_WIDTH, RSSI_LABEL},
+    {TYPE_VALUE  | 0, DSM5_X, DSM1_WIDTH, TELEM_FRSKY_RSSI},
 
+    {TYPE_HEADER | 1, LBL4_X, LBL4_WIDTH, CELL_LABEL},
+    {TYPE_VALUE  | 1, DSM4_X, DSM1_WIDTH, TELEM_FRSKY_VOLT3},
+    {TYPE_HEADER | 1, LBL5_X, LBL4_WIDTH, S_LABEL},
+    {TYPE_VALUE  | 1, DSM5_X, DSM1_WIDTH, TELEM_FRSKY_LRSSI},
+
+    {TYPE_HEADER | 2, LBL4_X, LBL4_WIDTH, BATT_LABEL},
+    {TYPE_VALUE  | 2, DSM4_X, DSM1_WIDTH, TELEM_FRSKY_VOLT2},
+    {TYPE_HEADER | 2, LBL5_X, LBL4_WIDTH, RXV_LABEL},
+    {TYPE_VALUE  | 2, DSM5_X, DSM1_WIDTH, TELEM_FRSKY_VOLT1},
+#endif
     {0, 0, 0, 0},
 };
 
@@ -319,14 +321,14 @@ const struct telem_layout2 devo_page[] = {
     {devo_header_gps, devo_layout_gps, 3, 4},
 };
 const struct telem_layout2 dsm_page[] = {
-    {dsm_header_basic, dsm_layout_basic, 4, 1},
+    {dsm_header_basic, dsm_layout_basic, 3, 1},
     {devo_header_gps, devo_layout_gps, 3, 4},
 };
 const struct telem_layout2 frsky_page[] = {
 #if HAS_EXTENDED_TELEMETRY
     {frsky_header_basic, frsky_layout_basic, 9, 1},
 #else
-    {frsky_header_basic, frsky_layout_basic, 2, 1},
+    {frsky_header_basic, frsky_layout_basic, 3, 1},
 #endif
     {devo_header_gps, devo_layout_gps, 3, 4},
 };
@@ -346,22 +348,22 @@ static const char *header_cb(guiObject_t *obj, const void *data)
         case VOLT_LABEL: return _tr("Volt");
         case RPM_LABEL: return _tr("RPM");
         case GPS_LABEL: return _tr("GPS");
-        case A_LABEL: return "A";
-        case B_LABEL: return "B";
-        case L_LABEL: return "L";
-        case R_LABEL: return "R";
-        case F_LABEL: return "F";
-        case H_LABEL: return "H";
-        case RXV_LABEL: return "RxV";
-        case BATT_LABEL: return "Bat";
+        case PID_LABEL: return "PID";
+        case LVC_LABEL: return _tr("LVC");
+        case TXFRAMES_LABEL: return _tr("TxFR");
+        case RXFRAMES_LABEL: return _tr("RxFR");
+        case RXV_LABEL: return _tr("RxV");
+        case BATT_LABEL: return _tr("Bat");
+        case RAW_LABEL: return _tr("BRaw");
         case RX_LABEL: return _tr("RX");
         case TX_LABEL: return _tr("TX");
         case DSM_LABEL: return "DSM";
-#if HAS_EXTENDED_TELEMETRY
+        case LQI_LABEL: return _tr("LQI");
+        case RSSI_LABEL: return _tr("RSSI");
+        case CELL_LABEL: return _tr("Cell");
+        case S_LABEL: return _tr("S");
+        case FRSKY_LABEL: return "FrS";
         case CELLS_LABEL:return "Cells";
-#else
-        case CELLS_LABEL:return "Signl";
-#endif
         case MISC_LABEL: return "Misc";
         case ARROW_LABEL: return current_page == telemetry_gps ? "<-" : "->";
     }
@@ -415,7 +417,11 @@ static const struct telem_layout2 *_get_telem_layout2()
 static void _show_page()
 {
     const struct telem_layout2 *page = _get_telem_layout2();
+#if HAS_EXTENDED_TELEMETRY
     PAGE_ShowHeader(page->header == dsm_header_basic ? _tr_noop("Telemetry monitor") : "");
+#else
+    PAGE_ShowHeader(page->header == dsm_header_basic || page->header == frsky_header_basic ? _tr_noop("Telemetry monitor") : "");
+#endif
     tp->font = TINY_FONT;
     tp->font.style = LABEL_SQUAREBOX;
     long i = 0;

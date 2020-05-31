@@ -2435,10 +2435,6 @@ msgstr ""
 msgid "Bat"
 msgstr ""
 
-#: telemetry/telem_frsky.c:71
-msgid "LRSSI"
-msgstr ""
-
 #: telemetry/telem_frsky.c:72
 msgid "LQI"
 msgstr ""
@@ -2510,3 +2506,21 @@ msgstr "Avión 6Ch"
 #: Model template
 msgid "Heli/Standard GUI"
 msgstr ""
+
+msgid "RxFR"
+msgstr "Rec"
+
+msgid "TxFR"
+msgstr "Emis"
+
+msgid "BRaw"
+msgstr "Real"
+
+msgid "LVC"
+msgstr "CBB"
+
+msgid "Cell"
+msgstr "Celd"
+
+msgid "S"
+msgstr "S"
