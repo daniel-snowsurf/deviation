@@ -120,15 +120,15 @@ const char * _dsm_str_by_value(char *str, u8 telem, s32 value)
 {
     switch(telem) {
         case TELEM_DSM_AIRSPEED:
-        case TELEM_DSM_FLOG_FADESA:
-        case TELEM_DSM_FLOG_FADESB:
-        case TELEM_DSM_FLOG_FADESL:
-        case TELEM_DSM_FLOG_FADESR:
-        case TELEM_DSM_FLOG_FRAMELOSS:
-        case TELEM_DSM_FLOG_HOLDS:
+        case TELEM_DSM_FLOG_FADESA:                                                            // Bayang - P - P Term multiplexed PR and Y
+        case TELEM_DSM_FLOG_FADESB:                                                            // Bayang - I - I Term multiplexed PR and Y
+        case TELEM_DSM_FLOG_FADESR:                                                            // Bayang - D - D Term multiplexed PR and Y
+        case TELEM_DSM_FLOG_FADESL:                                                            // Bayang - LVC - Low battery voltage 0/100
+        case TELEM_DSM_FLOG_FRAMELOSS:                                                         // Bayang - TxFR - Tx received frames 0-200
+        case TELEM_DSM_FLOG_HOLDS:                                                             // Bayang - RxFR - Rx received frames 0-200
         case TELEM_DSM_FLOG_RPM1:       _get_value_str(str, value, 0, '\0'); break;
-        case TELEM_DSM_FLOG_VOLT1:
-        case TELEM_DSM_FLOG_VOLT2:      _get_value_str(str, value, 2, 'V'); break;
+        case TELEM_DSM_FLOG_VOLT1:                                                             // Bayang - BRaw - Raw battery voltage
+        case TELEM_DSM_FLOG_VOLT2:      _get_value_str(str, value, 2, 'V'); break;             // Bayang - Bat - Compensated battery voltage
         case TELEM_DSM_FLOG_TEMP1:      _get_temp_str(str, value, 0, 'C'); break;
         case TELEM_DSM_AMPS1:           _get_value_str(str, value * 196791 / 100000, 1, 'A'); break;
         case TELEM_DSM_ALTITUDE:        
@@ -188,16 +188,16 @@ const char * _dsm_str_by_value(char *str, u8 telem, s32 value)
 const char * _dsm_name(char *str, u8 telem)
 {
     switch (telem) {
-        case TELEM_DSM_FLOG_VOLT1:
-        case TELEM_DSM_FLOG_VOLT2:      sprintf(str, "%s%d", _tr("Volt"), telem - TELEM_DSM_FLOG_VOLT1 + 1); break;
+        case TELEM_DSM_FLOG_VOLT1:      strcpy(str, _tr("BRaw")); break;                       // Bayang - Braw - Raw battery voltage
+        case TELEM_DSM_FLOG_VOLT2:      strcpy(str, _tr("Bat")); break;                        // Bayang - Bat - Compensated battery voltage
         case TELEM_DSM_FLOG_TEMP1:      strcpy(str, _tr("Temp")); break;
         case TELEM_DSM_FLOG_RPM1:       strcpy(str, _tr("RPM")); break;
-        case TELEM_DSM_FLOG_FADESA:     sprintf(str, "%s%c", _tr("Fades"), 'A'); break;
-        case TELEM_DSM_FLOG_FADESB:     sprintf(str, "%s%c", _tr("Fades"), 'B'); break;
-        case TELEM_DSM_FLOG_FADESL:     sprintf(str, "%s%c", _tr("Fades"), 'L'); break;
-        case TELEM_DSM_FLOG_FADESR:     sprintf(str, "%s%c", _tr("Fades"), 'R'); break;
-        case TELEM_DSM_FLOG_FRAMELOSS:  strcpy(str, _tr("Loss")); break;
-        case TELEM_DSM_FLOG_HOLDS:      strcpy(str, _tr("Holds")); break;
+        case TELEM_DSM_FLOG_FADESA:     strcpy(str, "P"); break;                               // Bayang - P - P Term multiplexed PR and Y
+        case TELEM_DSM_FLOG_FADESB:     strcpy(str, "I"); break;                               // Bayang - I - I Term multiplexed PR and Y
+        case TELEM_DSM_FLOG_FADESR:     strcpy(str, "D"); break;                               // Bayang - D - D Term multiplexed PR and Y
+        case TELEM_DSM_FLOG_FADESL:     strcpy(str, _tr("LVC")); break;                        // Bayang - LVC - Low battery voltage
+        case TELEM_DSM_FLOG_FRAMELOSS:  strcpy(str, _tr("TxFR")); break;                       // Bayang - TxFR - Tx received frames 0-200
+        case TELEM_DSM_FLOG_HOLDS:      strcpy(str, _tr("RxFR")); break;                       // Bayang - RxFR - Rx received frames 0-200
         case TELEM_DSM_AMPS1:           strcpy(str, _tr("Amps")); break;
         case TELEM_DSM_AIRSPEED:        strcpy(str, _tr("AirSpd")); break;
         case TELEM_DSM_ALTITUDE:        strcpy(str, _tr("Alt.")); break;
@@ -259,8 +259,6 @@ static const char * _dsm_short_name(char *str, u8 telem)
 {
     switch(telem) {
         case 0: strcpy(str, _tr("None")); break;
-        case TELEM_DSM_FLOG_VOLT1: strcpy(str, _tr("RxV")); break;
-        case TELEM_DSM_FLOG_VOLT2: strcpy(str, _tr("Bat")); break;
         default: return _dsm_name(str, telem);
     }
     return str;
