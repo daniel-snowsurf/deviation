@@ -45,9 +45,9 @@ enum {
     //
     DSM1_X       = 21,          // Posición telem 1 para 3 valores por fila
     DSM1_WIDTH   = 35,          // Ancho telem para 2 valores por fila
-    DSM2_X       = 57,          // Posición telem 2 para 3 valores por fila
-    DSM2_WIDTH   = 30,          // Ancho telem para 3 valores por fila
-    DSM3_X       = 93,          // Posición telem 3 para 3 valores por fila
+    DSM2_X       = 55,          // Posición telem 2 para 3 valores por fila
+    DSM2_WIDTH   = 33,          // Ancho telem para 3 valores por fila
+    DSM3_X       = 89,          // Posición telem 3 para 3 valores por fila
     DSM4_X       = 25,          // Posición telem 1 para 2 valores por fila
     DSM5_X       = 86,          // Posición telem 2 para 2 valores por fila
     //
@@ -321,7 +321,7 @@ const struct telem_layout2 devo_page[] = {
     {devo_header_gps, devo_layout_gps, 3, 4},
 };
 const struct telem_layout2 dsm_page[] = {
-    {dsm_header_basic, dsm_layout_basic, 3, 1},
+    {dsm_header_basic, dsm_layout_basic, 4, 1},
     {devo_header_gps, devo_layout_gps, 3, 4},
 };
 const struct telem_layout2 frsky_page[] = {
