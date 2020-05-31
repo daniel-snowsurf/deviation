@@ -40,6 +40,8 @@ static u8 channel;
 static u8 tx_power;
 static s16 freq_offset;
 
+static s8 num_cells;
+
 static const u8 AFHDS2A_regs[] = {
     -1  , 0x42 | (1<<5), 0x00, 0x25, 0x00,   -1,   -1, 0x00, 0x00, 0x00, 0x00, 0x01, 0x3c, 0x05, 0x00, 0x50, // 00 - 0f
     0x9e, 0x4b, 0x00, 0x02, 0x16, 0x2b, 0x12, 0x4f, 0x62, 0x80,   -1,   -1, 0x2a, 0x32, 0xc3, 0x1f, // 10 - 1f
@@ -288,9 +290,8 @@ static void update_telemetry()
     // AA | TXID | RXID | sensor id | sensor # | value 16 bit big endian | sensor id ......
     // max 7 sensors per packet
 
-    u8 voltage_index = 0;
-#if HAS_EXTENDED_TELEMETRY
     u8 cell_index = 0;
+#if HAS_EXTENDED_TELEMETRY
     u16 cell_total = 0;
     u8 temp_index;
 #endif
@@ -299,24 +300,46 @@ static void update_telemetry()
         u8 index = 9+(4*sensor);
         switch(packet[index]) {
             case SENSOR_VOLTAGE:
-                voltage_index++;
                 if (packet[index+1] == 0)  // Rx voltage
                 {
                     Telemetry.value[TELEM_FRSKY_VOLT1] = packet[index+3] << 8 | packet[index+2];
                     TELEMETRY_SetUpdated(TELEM_FRSKY_VOLT1);
                 }
-                else if (voltage_index == 2)  // external voltage sensor #1
-                {
+                break;
+            case SENSOR_CELL_VOLTAGE:
+                if (cell_index == 0) {
+                    // CELL1 voltage (battery voltage) stored in VOLT2, available in Devo7e without HAS_EXTENDED_TELEMETRY
                     Telemetry.value[TELEM_FRSKY_VOLT2] = packet[index+3] << 8 | packet[index+2];
                     TELEMETRY_SetUpdated(TELEM_FRSKY_VOLT2);
+                    if (num_cells == 0) {
+                        if (Telemetry.value[TELEM_FRSKY_VOLT2] > 2115)
+                            num_cells = 6;
+                        else if (Telemetry.value[TELEM_FRSKY_VOLT2] > 1728)
+                            num_cells = 5;
+                        else if (Telemetry.value[TELEM_FRSKY_VOLT2] > 1363)
+                            num_cells = 4;
+                        else if (Telemetry.value[TELEM_FRSKY_VOLT2] > 968)
+                            num_cells = 3;
+                        else if (Telemetry.value[TELEM_FRSKY_VOLT2] > 573)
+                            num_cells = 2;
+                        else
+                            num_cells = 1;
+                    }
+                    // Average cell voltage stored in VOLT3, requires modification to be available without HAS_EXTENDED_TELEMETRY
+                    Telemetry.value[TELEM_FRSKY_VOLT3] = (packet[index+3] << 8 | packet[index+2]) / num_cells;
+                    TELEMETRY_SetUpdated(TELEM_FRSKY_VOLT3);
+                    // Number of cells stored in LRSSI
+                    Telemetry.value[TELEM_FRSKY_LRSSI] = num_cells;
+                    TELEMETRY_SetUpdated(TELEM_FRSKY_LRSSI);
                 }
 #if HAS_EXTENDED_TELEMETRY
-                else if (voltage_index == 3)  // external voltage sensor #2
-                {
-                    Telemetry.value[TELEM_FRSKY_VOLT3] = packet[index+3] << 8 | packet[index+2];
-                    TELEMETRY_SetUpdated(TELEM_FRSKY_VOLT3);
+                if (cell_index < 6) {
+                    Telemetry.value[TELEM_FRSKY_CELL1 + cell_index] = packet[index+3] << 8 | packet[index+2];
+                    TELEMETRY_SetUpdated(TELEM_FRSKY_CELL1 + cell_index);
+                    cell_total += packet[index+3] << 8 | packet[index+2];
                 }
 #endif
+                cell_index++;
                 break;
 #if HAS_EXTENDED_TELEMETRY
             case SENSOR_TEMPERATURE:
@@ -328,14 +351,6 @@ static void update_telemetry()
                     Telemetry.value[TELEM_FRSKY_TEMP2] = ((packet[index+3] << 8 | packet[index+2]) - 400)/10;
                     TELEMETRY_SetUpdated(TELEM_FRSKY_TEMP2);
                 }
-                break;
-            case SENSOR_CELL_VOLTAGE:
-                if (cell_index < 6) {
-                    Telemetry.value[TELEM_FRSKY_CELL1 + cell_index] = packet[index+3] << 8 | packet[index+2];
-                    TELEMETRY_SetUpdated(TELEM_FRSKY_CELL1 + cell_index);
-                    cell_total += packet[index+3] << 8 | packet[index+2];
-                }
-                cell_index++;
                 break;
             case SENSOR_RPM:
                 Telemetry.value[TELEM_FRSKY_RPM] = packet[index+3] << 8 | packet[index+2];
@@ -612,6 +627,7 @@ static void initialize(u8 bind)
     }
     channel = 0;
     CLOCK_StartTimer(50000, afhds2a_cb);
+    num_cells = 0;
 }
 
 uintptr_t AFHDS2A_Cmds(enum ProtoCmds cmd)

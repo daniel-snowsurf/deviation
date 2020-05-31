@@ -110,14 +110,13 @@ typedef enum {
 
 
 typedef enum {
-    TELEM_FRSKY_RSSI = 1,
-    TELEM_FRSKY_VOLT1,  // VOLTx enums must be consecutive for
-    TELEM_FRSKY_VOLT2,  // use in telemetry/telem_frsky.c
-#if HAS_EXTENDED_TELEMETRY
-    TELEM_FRSKY_VOLT3,
-#endif
-    TELEM_FRSKY_LQI,
-    TELEM_FRSKY_LRSSI,
+    TELEM_FRSKY_RSSI = 1,           // Flysky - RSSI
+    // VOLTx enums must be consecutive for use in telemetry/telem_frsky.c
+    TELEM_FRSKY_VOLT1,              // Flysky - RxV - Rx voltage
+    TELEM_FRSKY_VOLT2,              // Flysky - Bat - Battery voltage
+    TELEM_FRSKY_VOLT3,              // Flysky - Cell - Cell voltage
+    TELEM_FRSKY_LQI,                // Flysky - LQI
+    TELEM_FRSKY_LRSSI,              // Flysky - S - Battery cells
 #if HAS_EXTENDED_TELEMETRY
     TELEM_FRSKY_VOLTA,
     TELEM_FRSKY_TEMP1,  // TEMPx enums must be consecutive for
