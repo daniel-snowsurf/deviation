@@ -72,6 +72,7 @@ enum {
     CHANNEL12,                  // Emg. stop
     CHANNEL13,                  // Analog Aux1
     CHANNEL14,                  // Analog Aux2
+    CHANNEL15,                  // Load - Cambiar PROTOCMD_NUMCHAN y PROTOCMD_DEFAULT_NUMCHAN
 };
 #define CHANNEL_INVERTED    CHANNEL5    // inverted flight on Floureon H101
 #define CHANNEL_FLIP        CHANNEL6
@@ -83,6 +84,7 @@ enum {
 #define CHANNEL_EMGSTOP     CHANNEL12
 #define CHANNEL_ANAAUX1     CHANNEL13
 #define CHANNEL_ANAAUX2     CHANNEL14
+#define CHANNEL_LOAD        CHANNEL15
 enum {
     Bayang_INIT1 = 0,
     Bayang_BIND2,
@@ -577,9 +579,9 @@ uintptr_t Bayang_Cmds(enum ProtoCmds cmd)
         initialize();
         return 0;
     case PROTOCMD_NUMCHAN:
-        return 14;
+        return 15;
     case PROTOCMD_DEFAULT_NUMCHAN:
-        return 14;
+        return 15;
     case PROTOCMD_CURRENT_ID:
         return Model.fixed_id;
     case PROTOCMD_GETOPTIONS:
