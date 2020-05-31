@@ -90,7 +90,7 @@ static void show_iconsel_page(int SelectedIcon) {
     int row = ROW_Y;
     int num_positions = INPUT_NumSwitchPos(toggleinput);
     if(num_positions < 2)
-        num_positions = 2;
+        num_positions = 3;           // Change toggle with channel source to 3 position instead of 2
 
     static const char * const tglidx[3] = {"0:", "1:", "2:"};
     struct LabelDesc inverted = DEFAULT_FONT;
@@ -130,7 +130,7 @@ static void navigate_toggleicons(s8 direction) {
     int toggleinput = MIXER_SRC(Model.pagecfg2.elem[tp->tglidx].src);
     int num_positions = INPUT_NumSwitchPos(toggleinput);
     if(num_positions < 2)
-        num_positions = 2;
+        num_positions = 3;           // Change toggle with channel source to 3 position instead of 2
     current_toggleicon += direction;
     if (current_toggleicon < 0)
         current_toggleicon = num_positions;
