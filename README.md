@@ -1,4 +1,16 @@
 # Deviation firmware for RC transmitters
+Custom version for Devo 7E
+  * No standard GUI
+  * Layout editor
+  * Permanent timer
+  * Datalog
+  * Extra switches no stock (like devo7e-256)
+  * Layout for 10 toggles
+  * 3 Position toggles for channels
+  * Flysky AFHDS 2A protocol with battery voltage, cell voltage and number of cells, without extended telemetry
+  * Bayang protocol with channel LOAD (Boldclash B03-Pro stock TX)
+  * Custom Frsky and DSM telemetry for Flysky AFHDS 2A and Bayang
+  
 The Deviation firmware project is hosted at http://www.deviationtx.com
 
 ## Current build status
