@@ -26,13 +26,13 @@
 enum {
      VTRIM_W      =  4,
      VTRIM_H      = 49,
-     HTRIM_W      = 49,
+     HTRIM_W      = 44,            // Reduced horizontal trim width, same width as text box
      HTRIM_H      =  4,
      MODEL_ICO_W  = 52,
      MODEL_ICO_H  = 36,
-     BOX_W        = 48,
+     BOX_W        = 44,            // Reduced box width to fit two toggle columns (10 toggles)
      SMALLBOX_H   = 10,
-     BIGBOX_H     = 14,
+     BIGBOX_H     = 13,            // Reduced bigbox height
      GRAPH_W      = (VTRIM_W),
      GRAPH_H      = (VTRIM_H / 2),
      BATTERY_W    = 26,
