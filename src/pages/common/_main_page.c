@@ -232,7 +232,14 @@ void PAGE_MainEvent()
                         }
                     } else {
                         //Non switch
-                        int sw = raw[src] > 0 ? 1 : 0;
+                        int sw;
+                        if (raw[src] > 3332) {
+                            sw = 2;
+                        } else if (raw[src] > -3334) {
+                            sw = 1;
+                        } else {
+                            sw = 0;
+                        }
                         if (ELEM_ICO(pc->elem[i], sw)) {
                             idx = ELEM_ICO(pc->elem[i], sw);
                         }
